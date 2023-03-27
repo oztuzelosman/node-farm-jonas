@@ -42,34 +42,88 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data1) => {
 /////////////////////////////
 /////////SERVER
 
-const http = require("http");
+//ROUTER
+
+/* const http = require("http");
 const url = require("url");
 
 const server = http.createServer((req, res) => {
   const pathName = req.url;
 
-  if (pathName === "/overview") {
+  if (pathName === "/overview" || pathName === "/") {
     res.end("Hello from server");
   } else if (pathName === "/product") {
     res.end("Hello from node");
   } else {
-    res.end("Hey NODE!!");
+    res.writeHead(404, {
+      "content-type": "text/html",
+    });
+    res.end("<h1>page not found</h1>");
   }
 });
 
 server.listen(8000, "127.0.0.1", () => {
   console.log("Listening");
 });
+ */
 
-/* const http = require("http");
+//ROUTER AND API !
+
+/* const fs = require("fs");
+const http = require("http");
 const url = require("url");
 
 const server = http.createServer((req, res) => {
-  console.log(req.url);
-  res.end("hello from server!");
+  const pathName = req.url;
+
+  if (pathName === "/overview" || pathName === "/") {
+    res.end("Hello from server");
+  } else if (pathName === "/product") {
+    fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
+      //const productData = JSON.parse(data);
+      res.writeHead(200, {
+        "content-type": "application/json",
+      });
+      res.end(data);
+    });
+  } else {
+    res.writeHead(404, {
+      "content-type": "text/html",
+    });
+    res.end("<h1>page not found</h1>");
+  }
+});
+
+server.listen(8000, "127.0.0.1", () => {
+  console.log("Listening");
+});
+ */
+
+//ROUTER AND API WITH LOADING DATA ONCE FILESYNC
+
+const fs = require("fs");
+const url = require("url");
+const http = require("http");
+
+const data = fs.readFileSync("./dev-data/data.json", "utf-8");
+//const dataObj = JSON.parse(data);
+
+const server = http.createServer((req, res) => {
+  const pathName = req.url;
+
+  if (pathName === "/" || pathName === "/overview") {
+    res.end("Hello Overview");
+  } else if (pathName === "/product") {
+    res.writeHead(200, { "Content-type": "application/json" });
+    res.end(data);
+  } else {
+    res.writeHead(404, {
+      "content-type": "text/html",
+    });
+    res.end("<h1>Not Found!</h1>");
+  }
 });
 
 server.listen(8000, "127.0.0.1", () => {
   console.log("listening");
 });
- */
