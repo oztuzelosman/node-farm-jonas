@@ -1,3 +1,5 @@
-const name = "Osman";
+const names = require("./JOHN/01-Modules/names");
+const sayHi = require("./JOHN/01-Modules/utils");
 
-console.log(name);
+sayHi(names.name1);
+sayHi(names.name2);
