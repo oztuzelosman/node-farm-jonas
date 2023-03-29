@@ -1,0 +1,5 @@
+Here is the async result: Hey I'm Osman from Turkey. I have been learning front-end  technologies since July 2021.  I have been learning techs like HTML/Css/Js/React/Git/Github/Linux/Docker on Udemy. I would like to become MERN stack dev so I have started learning Node. I will do my best for your team. Thanks for giving me a chance.
+
+, Hi everyone, I'm a professional software developer from the UK who's worked on full-stack applications for over 5 years. Currently working on government software for Belgium, Norway and Australia with .NET and Angular but Ive got experience in Python, JavaScript, etc.
+
+If a team needs help with their project, code needs reviewing, or anything else. drop me a message and I'll assist in any way I can 🙂
