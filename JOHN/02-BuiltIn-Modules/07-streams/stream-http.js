@@ -32,3 +32,9 @@ server.listen(5000);
 
 //Overall, using the pipe() method to transfer data from a readable stream to a writable stream is a common practice in Node.js,
 //as it simplifies the code and reduces the memory footprint by avoiding buffering the entire file in memory.
+
+//###
+
+//pipe(): This method is used to pipe the output of one stream
+//as the input of another stream. It can be used to connect
+//multiple streams and is a powerful feature of streams in Node.js.

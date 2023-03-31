@@ -19,8 +19,6 @@ const stream = createReadStream(
   "./JOHN/02-BuiltIn-Modules/07-streams/hugetext.txt"
 );
 
-//Stream object extends on Stream.Readable that has event named data
-
 stream.on("data", (result) => {
   console.log(result);
 });

@@ -1,12 +1,10 @@
-const http = require("http");
-const fs = require("fs");
+const express = require("express");
+const app = express();
 
-const server = http.createServer((req, res) => {
-  const text = fs.readFileSync(
-    "./JOHN/02-BuiltIn-Modules/07-streams/hugetext.txt",
-    "utf-8"
-  );
-  res.end(text);
+app.get("/", (req, res) => {
+  res.status(200).send("listening");
 });
 
-server.listen(5000);
+app.listen(5000, () => {
+  console.log("listening");
+});
