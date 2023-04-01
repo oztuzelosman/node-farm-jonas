@@ -1,0 +1,53 @@
+Understanding Params and Query in Express.js
+When building web applications, it is often necessary to retrieve data from the client. The two most common methods for retrieving data in Express.js are using request parameters and request query.
+
+Request Parameters
+Request parameters are used to send data to the server in the URL. The parameters are defined in the URL path, and they are preceded by a colon(:) to indicate that they are placeholders.
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app.get('/api/products/:productID', (req, res) => {
+  const { productID } = req.params
+  res.send(`Product ID is ${productID}`)
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+In the code above, we define a route /api/products/:productID. When a request is made to this endpoint, the productID parameter is extracted from the request object using req.params.
+
+Request parameters are useful when we want to retrieve specific data from the server, such as getting a specific user by ID.
+
+Request Query
+Request query is used to send data to the server through the URL. Query parameters are defined in the URL path after a question mark(?) and separated by an ampersand(&) when multiple parameters are passed.
+
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app.get('/api/v1/query', (req, res) => {
+  const { search, limit } = req.query
+  res.send(`Search parameter is ${search} and Limit parameter is ${limit}`)
+})
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+In the code above, we define a route /api/v1/query. When a request is made to this endpoint with query parameters, the search and limit parameters are extracted from the request object using req.query.
+
+Request query is useful when we want to search for data on the server or filter data based on some criteria.
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app.get('/api/products/:productID/reviews', (req, res) => {
+  const { productID } = req.params
+  const { rating } = req.query
+
+  const productReviews = reviews.filter((review) => review.productID === Number(productID))
+
+  if (rating) {
+    const filteredReviews = productReviews.filter((review) => review.rating >= Number(rating))
+    res.json(filteredReviews)
+  } else {
+    res.json(productReviews)
+  }
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+In the code above, we define a route /api/products/:productID/reviews. When a request is made to this endpoint with a productID parameter and a rating query parameter, the server returns all reviews for the specified product with a rating greater than or equal to the specified rating. If the rating parameter is not provided, the server returns all reviews for the specified product.
+
+Conclusion
+In this guide, we have discussed how to use request parameters and request query to retrieve data from the client in Express.js. Request parameters are used to retrieve specific data, while request query is used to search or filter data. Understanding these concepts is essential to building robust and scalable web applications.

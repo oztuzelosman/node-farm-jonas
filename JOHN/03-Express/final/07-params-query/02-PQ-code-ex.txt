@@ -1,0 +1,119 @@
+
+Defining Routes:
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.get('/', (req, res) => {
+  res.send('<h1> Home Page</h1><a href="/api/products">products</a>')
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+This code defines a GET route for the home page ('/'). When a client makes a GET request to the home page, the callback function will send back an HTML response.
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.get('/api/products', (req, res) => {
+  const newProducts = products.map((product) => {
+    const { id, name, image } = product
+    return { id, name, image }
+  })
+
+  res.json(newProducts)
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+This code defines another GET route for '/api/products'. When a client makes a GET request to this route, the callback function will create a new array of product objects with only the 'id', 'name', and 'image' properties. This new array is then sent back as a JSON response.
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.get('/api/products/:productID', (req, res) => {
+  const { productID } = req.params
+
+  const singleProduct = products.find(
+    (product) => product.id === Number(productID)
+  )
+  if (!singleProduct) {
+    return res.status(404).send('Product Does Not Exist')
+  }
+
+  return res.json(singleProduct)
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+This code defines another GET route with a parameter named productID. This parameter is dynamic and will match any string after '/api/products/'. In the callback function, we extract the value of the productID parameter from the req.params object, and use it to find a single product object from the products array. If a product with that ID does not exist, we return a 404 error response. If the product exists, we send it back as a JSON response.
+
+############################
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.get('/api/products/:productID/reviews/:reviewID', (req, res) => {
+  console.log(req.params)
+  res.send('hello world')
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+This is a route definition for a GET request to the endpoint /api/products/:productID/reviews/:reviewID.
+The :productID and :reviewID are route parameters that can be accessed using req.params.
+When a GET request is made to this endpoint, the function specified in the second argument is called with two parameters: req and res.
+req is an object that contains information about the request made, including the route parameters (req.params).
+res is an object that represents the HTTP response that will be sent back to the client.
+In this function, we simply log the req.params object to the console and send the string "hello world" as the response.
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.get('/api/v1/query', (req, res) => {
+  
+  //#################################################################
+  
+  No, "v1" in this code is not a pattern. It is just a part of the URL path that indicates the version number of the API being accessed. The use of version numbers in the URL path is a common convention for API design. By including the version number in the path, it allows for changes and updates to the API to be made without breaking existing integrations that rely on the older version of the API.
+
+In this case, the URL path "/api/v1/query" indicates that the API being accessed is version 1 of the API, and the specific endpoint being accessed is for querying products.
+  
+  
+  
+  
+  
+  const { search, limit } = req.query
+  let sortedProducts = [...products]
+
+  if (search) {
+    sortedProducts = sortedProducts.filter((product) => {
+      return product.name.startsWith(search)
+    })
+  }
+  //#################################################################
+  In this code, startsWith() is a string method used to check whether the name property of a given product starts with a specific string (search), which is obtained from the query parameters.
+
+The method startsWith() checks whether the beginning of the string matches the specified string and returns a Boolean value. If the name property of a product starts with the search string, the filter() method returns true and the product is included in the sortedProducts array. If the name property does not start with the search string, the filter() method returns false, and the product is not included in the sortedProducts array.
+  
+  
+  if (limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit))
+  }
+  if (sortedProducts.length < 1) {
+    // res.status(200).send('no products matched your search');
+    return res.status(200).json({ sucess: true, data: [] })
+  }
+  res.status(200).json(sortedProducts)
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+This is a route definition for a GET request to the endpoint /api/v1/query.
+When a GET request is made to this endpoint, the function specified in the second argument is called with two parameters: req and res, just like the previous example.
+In this function, we first destructure the search and limit query parameters from the req.query object.
+req.query is an object that contains the query parameters sent with the request.
+Next, we create a copy of an array called products using the spread operator ([...products]), which is presumably defined somewhere in the codebase.
+We then apply filters to this sortedProducts array based on the query parameters.
+If search is present, we filter the array to include only products whose names start with the value of search.
+If limit is present, we slice the array to include only the first limit number of products.
+If no products match the filters applied, we return a JSON response with sucess: true and an empty array as the data.
+If products match the filters applied, we return a JSON response with sortedProducts as the data.
+
+
+
+Starting the Server:
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.listen(5000, () => {
+  console.log('Server is listening on port 5000....')
+})
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Finally, we start the server on port 5000 by calling the listen() method on the app object. This will make the server listen for incoming requests and will log a message to the console when the server starts listening.
