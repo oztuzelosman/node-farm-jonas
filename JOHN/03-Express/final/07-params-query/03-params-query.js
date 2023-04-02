@@ -30,6 +30,12 @@ app.get("/api/products/:ProductID", (req, res) => {
   const singleProduct = products.find((product) => {
     return product.id === Number(ProductID);
   });
+  /*In JavaScript, the values that are passed in the URL
+    are always treated as strings. That's why productId is stored as a string in this code
+    even though it represents a numeric ID. When we use Number() to convert it to a number,
+    we are explicitly converting it to a numeric type
+    to perform the comparison with the id property of the products.  */
+
   //Acting whether single product exists or not
   if (!singleProduct) {
     return res.status(404).send("Product does not exist");
