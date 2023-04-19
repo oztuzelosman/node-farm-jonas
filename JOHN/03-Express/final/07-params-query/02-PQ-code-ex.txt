@@ -7,8 +7,10 @@ app.get('/', (req, res) => {
 })
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-This code defines a GET route for the home page ('/'). When a client makes a GET request to the home page, the callback function will send back an HTML response.
-
+This code defines a GET route for the home page ('/'). 
+When a client makes a GET request to the home page, 
+the callback function will send back an HTML response.
+  
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 app.get('/api/products', (req, res) => {
@@ -21,7 +23,11 @@ app.get('/api/products', (req, res) => {
 })
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-This code defines another GET route for '/api/products'. When a client makes a GET request to this route, the callback function will create a new array of product objects with only the 'id', 'name', and 'image' properties. This new array is then sent back as a JSON response.
+This code defines another GET route for '/api/products'.
+When a client makes a GET request to this route, 
+the callback function will create a new array of product objects with 
+only the 'id', 'name', and 'image' properties. 
+This new array is then sent back as a JSON response.
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -39,11 +45,14 @@ app.get('/api/products/:productID', (req, res) => {
 })
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-This code defines another GET route with a parameter named productID. This parameter is dynamic and will match any string after '/api/products/'. In the callback function, we extract the value of the productID parameter from the req.params object, and use it to find a single product object from the products array. If a product with that ID does not exist, we return a 404 error response. If the product exists, we send it back as a JSON response.
+This code defines another GET route with a parameter named productID.
+This parameter is dynamic and will match any string after '/api/products/'.
+In the callback function, we extract the value of the productID parameter from the req.params object,
+and use it to find a single product object from the products array. 
+If a product with that ID does not exist, we return a 404 error response. 
+If the product exists, we send it back as a JSON response.
 
 ############################
-
-
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 app.get('/api/products/:productID/reviews/:reviewID', (req, res) => {
@@ -63,14 +72,16 @@ app.get('/api/v1/query', (req, res) => {
   
   //#################################################################
   
-  No, "v1" in this code is not a pattern. It is just a part of the URL path that indicates the version number of the API being accessed. The use of version numbers in the URL path is a common convention for API design. By including the version number in the path, it allows for changes and updates to the API to be made without breaking existing integrations that rely on the older version of the API.
+"v1" in this code is not a pattern. 
+It is just a part of the URL path that indicates the version number of the API being accessed.
+The use of version numbers in the URL path is a common convention for API design.
+By including the version number in the path, it allows for changes and updates to the API 
+to be made without breaking existing integrations that rely on the older version of the API.
 
-In this case, the URL path "/api/v1/query" indicates that the API being accessed is version 1 of the API, and the specific endpoint being accessed is for querying products.
+In this case, the URL path "/api/v1/query" indicates that the API being accessed
+is version 1 of the API, and the specific endpoint being accessed is for querying products.
   
-  
-  
-  
-  
+
   const { search, limit } = req.query
   let sortedProducts = [...products]
 
@@ -80,9 +91,16 @@ In this case, the URL path "/api/v1/query" indicates that the API being accessed
     })
   }
   //#################################################################
-  In this code, startsWith() is a string method used to check whether the name property of a given product starts with a specific string (search), which is obtained from the query parameters.
 
-The method startsWith() checks whether the beginning of the string matches the specified string and returns a Boolean value. If the name property of a product starts with the search string, the filter() method returns true and the product is included in the sortedProducts array. If the name property does not start with the search string, the filter() method returns false, and the product is not included in the sortedProducts array.
+In this code, startsWith() is a string method used to check
+whether the name property of a given product starts with a specific string (search),
+which is obtained from the query parameters.
+
+The method startsWith() checks whether the beginning of the string matches the specified string
+and returns a Boolean value. If the name property of a product starts with the search string,
+the filter() method returns true and the product is included in the sortedProducts array. 
+If the name property does not start with the search string, 
+the filter() method returns false, and the product is not included in the sortedProducts array.
   
   
   if (limit) {
