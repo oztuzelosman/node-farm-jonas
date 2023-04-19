@@ -1,28 +1,60 @@
 const express = require("express");
 const app = express();
+const { products } = require("./JOHN/03-Express/data.js");
 
-const authorize = require("./JOHN/03-Express/final/08-middleware/authorize-mw.js");
-const logger = require("./JOHN/03-Express/final/08-middleware/authorize-mw.js");
-
-app.use([authorize, logger]);
+//##################################
 
 app.get("/", (req, res) => {
-  res.status(200).send("Home Page of Site");
+  res.status(200).send("HOME");
 });
+
+//##################################
 
 app.get("/about", (req, res) => {
-  res.send("about!");
+  res.status(200).send("ABOUT");
 });
+
+//##################################
 
 app.get("/api/products", (req, res) => {
-  res.send("Products");
+  const consciseProducts = products.map((product) => {
+    const { id, name, price } = product;
+    return { id, name, price };
+  });
+
+  res.json(consciseProducts);
 });
 
-app.get("/api/items", (req, res) => {
-  console.log(req.user);
-  res.send("items");
+//##################################
+
+app.get("/api/products/:ProductId", (req, res) => {
+  const { ProductId } = req.params;
+  //res.send(ProductId);
+
+  const singleProduct = products.find((product) => {
+    return product.id === Number(ProductId);
+  });
+
+  if (!singleProduct) {
+    res.status(404).send("not found");
+  } else {
+    res.json(singleProduct);
+  }
 });
 
-app.listen(5000, () => {
-  console.log(`server is listening `);
+//##################################
+app.get("api/v1/query", (req, res) => {
+  const [search, limit] = req.query;
+
+  let sortedProducts = [...products];
+
+  if (search) {
+    sortedProducts = sortedProducts.filter((sortedProduct) => {
+      return sortedProduct.name.startsWith(search);
+    });
+  }
+});
+//##################################
+app.listen(8080, () => {
+  console.log("listening on port 8080");
 });
