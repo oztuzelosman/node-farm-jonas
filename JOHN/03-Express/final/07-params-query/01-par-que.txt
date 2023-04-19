@@ -71,3 +71,78 @@ to retrieve data from the client in Express.js.
 Request parameters are used to retrieve specific data, 
 while request query is used to search or filter data.
 Understanding these concepts is essential to building robust and scalable web applications.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const express = require("express");
+const app = express();
+const { products } = require("./JOHN/03-Express/data.js");
+
+//##################################.
+//Route home
+
+app.get("/", (req, res) => {
+  res.status(200).send("HOME");
+});
+
+//##################################
+//Route about
+app.get("/about", (req, res) => {
+  res.status(200).send("ABOUT");
+});
+
+//##################################
+//Route concise products
+app.get("/api/products", (req, res) => {
+  const consciseProducts = products.map((product) => {
+    const { id, name, price } = product;
+    return { id, name, price };
+  });
+
+  res.json(consciseProducts);
+});
+
+//##################################
+//Route only one product
+
+app.get("/api/products/:ProductId", (req, res) => {
+  const { ProductId } = req.params;
+  //res.send(ProductId);
+
+  const singleProduct = products.find((product) => {
+    return product.id === Number(ProductId);
+  });
+
+  if (!singleProduct) {
+    res.status(404).send("not found");
+  } else {
+    res.json(singleProduct);
+  }
+});
+
+//##################################
+//Route query parameters
+app.get("/api/v1/query", (req, res) => {
+  const { search, limit } = req.query;
+
+  let sortedProducts = [...products];
+
+  if (search) {
+    sortedProducts = sortedProducts.filter((sortedProduct) => {
+      return sortedProduct.name.startsWith(search);
+    });
+  }
+  if (limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit));
+  }
+
+  if (sortedProducts.length < 1) {
+    return res.status(200).json({ sucess: true, data: [] });
+  }
+  res.status(200).json(sortedProducts);
+});
+//##################################
+//Listen to the server for reqs and res
+app.listen(5000, () => {
+  console.log("listening on port 5000");
+});
