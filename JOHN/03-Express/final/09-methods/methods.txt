@@ -1,0 +1,52 @@
+express.urlencoded is a middleware function in the Express.js web framework
+that parses incoming requests with URL-encoded payloads.
+In other words, it helps to EXTRACT!! data from the 
+application/x-www-form-urlencoded format, which is commonly used 
+in HTML form submissions.
+
+Here's an example to illustrate how express.urlencoded works:
+
+Let's say you have an HTML form 
+with two fields, name and email, and you submit the form to a server running Express. 
+The form data is sent to the server in URL-encoded format, 
+which might look something like this:
+
+////////////////////////////////////////
+name=John+Doe&email=john.doe@example.com
+////////////////////////////////////////
+
+To extract the data from this format, you can use express.urlencoded middleware 
+in your server code, like this:
+
+////////////////////////////////////////
+
+app.use(express.urlencoded({ extended: false }))
+
+app.post('/submit', (req, res) => {
+  const name = req.body.name
+  const email = req.body.email
+  res.send(`Thank you, ${name}, for submitting your email address (${email}).`)
+})
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000.')
+})
+In this example, the express.urlencoded middleware is used 
+to parse incoming requests with URL-encoded payloads. 
+When the server receives a POST request to the /submit endpoint,
+the name and email fields are extracted from the req.body object,
+ which is CREATED BY MIDDLEWARE.
+
+So, when you submit the HTML form with the data
+name=John+Doe&email=john.doe@example.com, 
+the req.body object in the server code will look like this:
+
+////////////////////////////////////////
+{
+  name: 'John Doe',
+  email: 'john.doe@example.com'
+}
+////////////////////////////////////////
+
+You can then use this data to perform some action in your server code, 
+such as sending an email or storing the data in a database.
