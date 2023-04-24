@@ -11,16 +11,16 @@ app.get("/api/people", (req, res) => {
 
 //updating values
 // PUT request handler for updating a person by ID
-app.put("/api/people/:personId", (req, res) => {
-  // Destructure the personId parameter from the request URL
-  const { personId } = req.params;
+app.put("/api/people/:updateId", (req, res) => {
+  // Destructure the updateId parameter from the request URL
+  const { updateId } = req.params;
   // Destructure the name property from the request body
   const { name } = req.body;
   // Use the findIndex() method to get the index of the person object
   // with the matching ID
 
   const personIndex = people.findIndex((person) => {
-    return person.id === Number(personId);
+    return person.id === Number(updateId);
   });
 
   // If the person is not found, return an error response with a 404 status code
